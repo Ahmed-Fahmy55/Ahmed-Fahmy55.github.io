@@ -43,6 +43,40 @@ function makeGradientTexture(p: Project): THREE.CanvasTexture {
   return tex
 }
 
+// Letterbox a portrait/odd-ratio image onto the project gradient so the card
+// keeps its 16:9 shape without stretching the artwork
+function makeContainTexture(p: Project, img: HTMLImageElement): THREE.CanvasTexture {
+  const canvas = document.createElement('canvas')
+  canvas.width = 512
+  canvas.height = 288
+  const ctx = canvas.getContext('2d')!
+  const colors = p.grad.match(/#[0-9a-fA-F]{3,8}/g) ?? ['#1f3864', '#2e5aac']
+  const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height)
+  colors.forEach((c, i) => grad.addColorStop(colors.length === 1 ? 0 : i / (colors.length - 1), c))
+  ctx.fillStyle = grad
+  ctx.fillRect(0, 0, canvas.width, canvas.height)
+  const scale = Math.min(canvas.width / img.width, canvas.height / img.height)
+  const w = img.width * scale
+  const h = img.height * scale
+  ctx.drawImage(img, (canvas.width - w) / 2, (canvas.height - h) / 2, w, h)
+  const tex = new THREE.CanvasTexture(canvas)
+  tex.colorSpace = THREE.SRGBColorSpace
+  return tex
+}
+
+// Crop the centred 16:9 region out of a wider-or-taller source
+function applyCover(t: THREE.Texture, srcAspect: number, cardAspect: number) {
+  if (srcAspect > cardAspect) {
+    const r = cardAspect / srcAspect
+    t.repeat.set(r, 1)
+    t.offset.set((1 - r) / 2, 0)
+  } else {
+    const r = srcAspect / cardAspect
+    t.repeat.set(1, r)
+    t.offset.set(0, (1 - r) / 2)
+  }
+}
+
 // Poster/YouTube thumbnail texture with the gradient as instant fallback
 function useCardTexture(p: Project): THREE.Texture {
   const fallback = useMemo(() => makeGradientTexture(p), [p])
@@ -61,11 +95,19 @@ function useCardTexture(p: Project): THREE.Texture {
       t => {
         if (disposed) { t.dispose(); return }
         t.colorSpace = THREE.SRGBColorSpace
-        if (!p.poster && p.video) {
-          // hqdefault is 4:3 with letterbox bars — crop the centred 16:9 region
-          t.repeat.set(1, 0.75)
-          t.offset.set(0, 0.125)
+        const cardAspect = CARD_W / CARD_H
+        const img = t.image as HTMLImageElement
+        const srcAspect = img.width / img.height
+        if (srcAspect < 1) {
+          // Portrait source: letterbox onto the gradient instead of cropping to a sliver
+          const contained = makeContainTexture(p, img)
+          t.dispose()
+          loaded = contained
+          setTex(contained)
+          return
         }
+        // hqdefault is 4:3 with letterbox bars; posters may be any ratio — cover-crop
+        applyCover(t, srcAspect, cardAspect)
         loaded = t
         setTex(t)
       },

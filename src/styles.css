@@ -206,6 +206,8 @@ section { padding: 60px 0; }
 .status-deployed .dot-s { background: #7ef0bb; box-shadow: 0 0 8px #7ef0bb; }
 .status-beta { color: #f6c177; border: 1px solid #c77b1a66; }
 .status-beta .dot-s { background: #f6c177; box-shadow: 0 0 8px #f6c177; }
+.status-jam { color: #c4b5fd; border: 1px solid #6a3db066; }
+.status-jam .dot-s { background: #c4b5fd; box-shadow: 0 0 8px #c4b5fd; }
 .body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 11px; flex: 1; }
 .role-pill {
   align-self: flex-start; font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase;

@@ -1,4 +1,4 @@
-export const statusLabel: Record<string, string> = { deployed: 'Deployed', beta: 'In Beta' }
+export const statusLabel: Record<string, string> = { deployed: 'Deployed', beta: 'In Beta', jam: 'Game Jam' }
 
 export interface Project {
   mark: string
@@ -61,12 +61,36 @@ export const PROJECTS: Project[] = [
     outcome: 'Shipped as a complete VR game experience.',
   },
   {
-    mark: 'KC', cat: 'Games', tag: '3D · Co-op', filter: 'Games', role: 'Solo Developer', status: null,
-    title: 'Kitchen Chaos', grad: 'linear-gradient(135deg,#7a3b1f,#b5541f)',
-    desc: 'Cooperative 3D kitchen game where players race to prep and plate orders together. Built the full gameplay loop, state-driven cooking stations, and multiplayer sync.',
-    chips: ['Unity', 'Netcode for GameObjects', 'C#'], video: '3_pYFQyDzGw', localVideo: null, poster: null, repo: '#',
-    challenge: 'Coordinate state across cooking stations and keep cooperative play in sync across clients.',
-    outcome: 'A focused, completed study in clean architecture and networked gameplay.',
+    mark: 'SW', cat: 'Games', tag: 'Endless Runner · Client', filter: 'Games', role: 'Solo Developer', status: 'deployed',
+    title: 'Supway', grad: 'linear-gradient(135deg,#1f5a4a,#2e8a7a)',
+    desc: 'Subway-Surfers-style endless runner built for a client to deliver medical tips while you play. Reworked the fail state so hitting an obstacle never ends the run — the player is pushed back a few units instead, keeping the tips flowing.',
+    chips: ['Unity', 'C#', '3D'], video: null, localVideo: '/Supway.mp4', poster: '/Supway_Poster.png', repo: '#',
+    challenge: 'Deliver the client’s medical tips inside an endless-runner loop without the usual instant-death punish breaking the flow of the message.',
+    outcome: 'Shipped and deployed to the client, with a knock-back fail state instead of death so a hit costs distance rather than the run.',
+  },
+  {
+    mark: 'OV', cat: 'Games', tag: 'Top-down · Local VS', filter: 'Games', role: 'Solo Developer', status: 'jam',
+    title: 'Overload', grad: 'linear-gradient(135deg,#7a3b1f,#b5541f)',
+    desc: 'Top-down local-versus arena game built in 4 days for a game jam. Two mechanics — throwing the ball and catching it — drive a best-of-three match, playable head-to-head locally or against AI.',
+    chips: ['Unity', 'C#', 'Game Jam', 'AI'], video: 'JE5cSqbTguc', localVideo: null, poster: null, repo: '#',
+    challenge: 'Make a throw-and-catch duel readable and fair in a 4-day jam, and build an AI opponent that reads the same two mechanics as a human player.',
+    outcome: 'Shipped in 4 days with local versus and vs-AI modes over a best-of-three match structure.',
+  },
+  {
+    mark: 'MG', cat: 'Games', tag: '2D · Puzzle', filter: 'Games', role: 'Solo Developer', status: 'jam',
+    title: 'Memory Glitch', grad: 'linear-gradient(135deg,#3a1f5a,#6a3db0)',
+    desc: 'Sci-fi glitchy card-matching game built and shipped for a game jam. Full development with custom shader-driven visual effects.',
+    chips: ['Unity', 'Shader Graph', 'C#', 'Game Jam'], video: '0-K8m4zf0vY', localVideo: null, poster: null, repo: '#',
+    challenge: 'Drive the sci-fi glitch aesthetic with custom shaders without hurting card readability — on a jam deadline.',
+    outcome: 'Shipped for the jam, including the shader-driven visual effects.',
+  },
+  {
+    mark: 'FI', cat: 'Games', tag: '2D · Bullet Hell', filter: 'Games', role: 'Solo Developer', status: 'jam',
+    title: 'Farm-Invaders', grad: 'linear-gradient(135deg,#5a3d1f,#a06a2e)',
+    desc: '2D top-down bullet hell built and shipped for a game jam. Full development — wave spawning, attack patterns, and scoring.',
+    chips: ['Unity', '2D', 'C#', 'Game Jam'], video: 'Ulz9RGtLlPk', localVideo: null, poster: null, repo: '#',
+    challenge: 'Design wave spawning and bullet patterns that scale smoothly in difficulty, within a jam timebox.',
+    outcome: 'Shipped for the jam as a complete 2D bullet-hell loop with scoring.',
   },
   {
     mark: 'AX', cat: 'Games', tag: '2D · Arcade', filter: 'Games', role: 'Solo Developer', status: null,
@@ -85,28 +109,12 @@ export const PROJECTS: Project[] = [
     outcome: 'A complete top-down stealth game built solo.',
   },
   {
-    mark: 'MG', cat: 'Games', tag: '2D · Puzzle', filter: 'Games', role: 'Solo Developer', status: null,
-    title: 'Memory Glitch', grad: 'linear-gradient(135deg,#3a1f5a,#6a3db0)',
-    desc: 'Sci-fi glitchy card-matching game. Full development with custom shader-driven visual effects.',
-    chips: ['Unity', 'Shader Graph', 'C#'], video: '0-K8m4zf0vY', localVideo: null, poster: null, repo: '#',
-    challenge: 'Drive the sci-fi glitch aesthetic with custom shaders without hurting card readability.',
-    outcome: 'Full development including the shader-driven visual effects.',
-  },
-  {
     mark: 'TW', cat: 'Games', tag: '3D · Competitive', filter: 'Games', role: 'Solo Developer', status: null,
     title: 'Tank War', grad: 'linear-gradient(135deg,#3f4a23,#6b7a3d)',
     desc: 'Competitive 3D tank battle. Built the full gameplay, controls, and combat systems.',
     chips: ['Unity', '3D', 'C#', 'Netcode for GameObjects'], video: 'dLxWG47LB00', localVideo: null, poster: null, repo: '#',
     challenge: 'Balance competitive 3D combat and controls so matches feel fair and fun.',
     outcome: 'Full gameplay and combat systems built solo.',
-  },
-  {
-    mark: 'FI', cat: 'Games', tag: '2D · Bullet Hell', filter: 'Games', role: 'Solo Developer', status: null,
-    title: 'Farm-Invaders', grad: 'linear-gradient(135deg,#5a3d1f,#a06a2e)',
-    desc: '2D top-down bullet hell. Full development — wave spawning, attack patterns, and scoring.',
-    chips: ['Unity', '2D', 'C#'], video: 'Ulz9RGtLlPk', localVideo: null, poster: null, repo: '#',
-    challenge: 'Design wave spawning and bullet patterns that scale smoothly in difficulty.',
-    outcome: 'A complete 2D bullet-hell loop with scoring.',
   },
   {
     mark: 'CQ', cat: 'Teaching', tag: 'Quiz · Customizable', filter: 'Teaching', role: 'Lead Programmer', status: null,
